@@ -93,7 +93,7 @@ function App() {
               </div>
             </>
             :
-            <h3 className='text-center border p-5'>
+            <h3 className='text-center border p-5 bg-white'>
               No tasks to be done
             </h3>
         }

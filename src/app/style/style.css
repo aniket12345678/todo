@@ -2,6 +2,12 @@
     margin: 60px 250px;
 }
 
+#root{
+    height: 38rem;
+    background-image: linear-gradient(to bottom, #e791af, #e488ae, #df7fae, #da76af, #d46eb1);
+}
+
+
 @media only screen and (max-width: 768px) {
     .main {
         margin: 11px 11px;
