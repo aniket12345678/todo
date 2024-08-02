@@ -1,4 +1,4 @@
-import { Button, Table, Navbar, Nav, Container } from 'react-bootstrap';
+import { Button, Table, Navbar, Container } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { remove } from './slice/crud.slice';
 import AddModal from './components/AddModal';
