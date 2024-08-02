@@ -2,7 +2,7 @@ import { Button, Table, Navbar, Container } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { remove } from './slice/crud.slice';
 import AddModal from './components/AddModal';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import UpdateModal from './components/UpdateModal';
 import { Add, Edit, Delete } from '@mui/icons-material';
 
@@ -23,18 +23,18 @@ function App() {
     setModalState(data);
   }
 
-  const deletion = (data) => {
+  const deletion = useCallback((data) => {
     if (window.confirm('Do you want to remove this data?')) {
       const output = findAll.filter((x) => x.id !== data);
       dispatch(remove({ data: output }));
     }
-  }
+  }, [findAll])
 
-  const updation = (data, id) => {
+  const updation = useCallback((data, id) => {
     const output = findAll.find((x) => x.id === data);
     setFindOne({ data: output, index: id });
     setUpdateModalState(true);
-  }
+  }, [findAll])
 
   return (
     <div>
