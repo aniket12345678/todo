@@ -14,10 +14,7 @@ function App() {
   const [updateModalState, setUpdateModalState] = useState(false);
   const [findOne, setFindOne] = useState({
     data: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
+      task: '',
     },
     index: null
   });
@@ -27,8 +24,10 @@ function App() {
   }
 
   const deletion = (data) => {
-    const output = findAll.filter((x) => x.id !== data);
-    dispatch(remove({ data: output }))
+    if (window.confirm('Do you want to remove this data?')) {
+      const output = findAll.filter((x) => x.id !== data);
+      dispatch(remove({ data: output }));
+    }
   }
 
   const updation = (data, id) => {
@@ -44,44 +43,61 @@ function App() {
           <h4 className='text-white'>Todo app</h4>
         </Container>
       </Navbar>
-      <Button variant='success' onClick={() => addEntry(true)}>
-        <Add />
-      </Button>
-      <div style={{ overflowX: 'auto' }}>
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Username</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              findAll.map((itr, i) => {
-                return (
-                  <tr key={i}>
-                    <td>1</td>
-                    <td>{itr.firstName}</td>
-                    <td>{itr.lastName}</td>
-                    <td>{itr.email}</td>
-                    <td>{itr.password}</td>
-                    <td>
-                      <Button style={{color:'white'}} variant='warning' onClick={() => updation(itr.id, i)}>
-                        <Edit />
-                      </Button>
-                      <Button variant='danger' onClick={() => deletion(itr.id)}>
-                        <Delete />
-                        </Button>
-                    </td>
-                  </tr>
-                )
-              })
-            }
-          </tbody>
-        </Table>
+      <div className='main'>
+        <div className='mb-3'>
+          <Button variant='success' onClick={() => addEntry(true)}>
+            <Add />
+          </Button>
+        </div>
+        {
+          findAll.length > 0 ?
+            <>
+              <div style={{ overflowX: 'auto' }}>
+                <Table striped bordered hover>
+                  <thead>
+                    <tr>
+                      <th style={{ width: '70%' }}>Task</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {
+                      findAll.map((itr, i) => {
+                        return (
+                          <tr key={i}>
+                            <td>{itr.task}</td>
+                            <td>
+                              <div className='d-flex justify-content-around'>
+                                <div>
+                                  <Button
+                                    style={{ color: 'white' }}
+                                    variant='warning'
+                                    onClick={() => updation(itr.id, i)}
+                                  >
+                                    <Edit />
+                                  </Button>
+                                </div>
+                                <div>
+                                  <Button variant='danger' onClick={() => deletion(itr.id)}>
+                                    <Delete />
+                                  </Button>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        )
+                      })
+                    }
+                  </tbody>
+                </Table>
+              </div>
+            </>
+            :
+            <h3 className='text-center border p-5'>
+              No tasks to be done
+            </h3>
+        }
+
       </div>
       <AddModal modalState={modalState} handleClose={setModalState} />
       <UpdateModal
